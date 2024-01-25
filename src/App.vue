@@ -8,6 +8,7 @@ import { RouterLink, RouterView } from "vue-router";
       <div class="navbar">
         <RouterLink to="/" class="text-xl">Home</RouterLink>
         <RouterLink to="/about" class="text-xl ml-3">About</RouterLink>
+        <RouterLink to="/weather" class="text-xl ml-3">Weather</RouterLink>
       </div>
     </header>
   
