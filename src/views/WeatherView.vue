@@ -1,4 +1,9 @@
 <script setup lang="ts">
+// Store
+import { useWeatherStore } from '@/stores/weather';
+
+const weatherStore = useWeatherStore();
+
 const apiKey = "c71a382e51b62d85bce7fe1e6db2810f";
 const openWeatherMapUrl = "https://api.openweathermap.org";
 
@@ -58,6 +63,12 @@ async function getGeographicalCoordinates(): Promise<GeographicalCoordinates> {
 
   return coordinates;
 }
+
+// Favorite Location
+function saveLocation() {
+  // Add to favorite lcoations
+  weatherStore.favoriteLocations.push(`${locationModel.value}`)
+}
 </script>
 
 <template>
@@ -79,5 +90,7 @@ async function getGeographicalCoordinates(): Promise<GeographicalCoordinates> {
 
       <button type="submit" class="btn btn-success">Get data</button>
     </form>
+
+    <button type="button" class="btn btn-primary" @click="saveLocation">Save Location</button>
   </div>
 </template>
