@@ -17,7 +17,7 @@ export const useWeatherStore = defineStore("weatherStore", {
   actions: {
     async getGeographicalCoordinates(
       location: string
-    ): Promise<GeographicalCoordinates> {
+    ): Promise<GeographicalCoordinates | null> {
       // Build the url
       let url = this.openWeatherMapUrl + "/geo/1.0/direct";
 
@@ -29,24 +29,30 @@ export const useWeatherStore = defineStore("weatherStore", {
       // Add onto url
       url += `?q=${location}&limit=${limit}&appid=${this.apiKey}`;
 
-      // Make Fetch
-      let response = await fetch(url);
+      try {
+        // Make Fetch
+        let response = await fetch(url);
 
-      // Check if ok
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        // Check if ok
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        // Get json response
+        let data = await response.json();
+
+        // Get coordinates
+        let coordinates: GeographicalCoordinates = {
+          lat: data[0].lat,
+          lon: data[0].lon,
+        };
+
+        return coordinates;
+      } catch (error) {
+        console.error("Error getting geographical coordinates: ", error);
+
+        return null;
       }
-
-      // Get json response
-      let data = await response.json();
-
-      // Get coordinates
-      let coordinates: GeographicalCoordinates = {
-        lat: data[0].lat,
-        lon: data[0].lon,
-      };
-
-      return coordinates;
     },
     async getWeatherForecast(lat: number, lon: number) {
       let url = this.openWeatherMapUrl + "/data/2.5/forecast";
@@ -55,10 +61,15 @@ export const useWeatherStore = defineStore("weatherStore", {
       url += `?lat=${lat}&lon=${lon}&appid=${this.apiKey}`;
 
       // Make Fetch
-      await fetch(url)
-        .then((response) => response.json())
-        .then((data) => console.log(data))
-        .catch((error) => console.error("Error:", error));
+      try {
+        await fetch(url)
+          .then((response) => response.json())
+          .then((data) => console.log(data));
+      } catch (error) {
+        console.error("Error getting weather forecast", error);
+
+        return null;
+      }
     },
     checkIfInFavoriteLocations() {
       let newFavoriteLocation = this.favoriteLocations.find(
@@ -85,7 +96,7 @@ export const useWeatherStore = defineStore("weatherStore", {
       let newFavoriteLocations = this.favoriteLocations.filter(
         (location) => location.locationName != locationName
       );
-      
+
       // Save new favorite locations
       this.favoriteLocations = newFavoriteLocations;
     },

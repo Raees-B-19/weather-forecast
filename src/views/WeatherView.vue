@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// Store
 import { useWeatherStore } from "@/stores/weather";
 import FavoriteLocationCard from "@/components/FavoriteLocationCard.vue";
 
@@ -12,6 +11,7 @@ let locationModel = defineModel("");
 
 let currentLocationName = "";
 
+// Store
 weatherStore.currentLocationData = {};
 
 weatherStore.displaySaveLocationButton = false;
@@ -19,30 +19,44 @@ weatherStore.displaySaveLocationButton = false;
 // Get Weather
 async function handleSubmit() {
   weatherStore.displaySaveLocationButton = false;
-  
+
   // Get Coordinates
-  let coordinates: GeographicalCoordinates =
-    await weatherStore.getGeographicalCoordinates(`${locationModel.value}`);
+  try {
+    let coordinates: GeographicalCoordinates =
+      await weatherStore.getGeographicalCoordinates(`${locationModel.value}`);
 
-  // Get location data
-  let currentLocationData: LocationData = {
-    locationName: `${locationModel.value}`,
-    lat: coordinates.lat,
-    lon: coordinates.lon,
-  };
+    // Check if lat nad lon is ont null
+    if (coordinates.lat == null && coordinates.lat == null) {
+      console.error("Error with geographical coordinates");
 
-  // Get weather forecast
-  weatherStore.getWeatherForecast(coordinates.lat, coordinates.lon)
+      return null;
+    }
 
-  // Update locationDataModel
-  weatherStore.currentLocationData = currentLocationData;
+    // Get location data
+    let currentLocationData: LocationData = {
+      locationName: `${locationModel.value}`,
+      lat: coordinates.lat,
+      lon: coordinates.lon,
+    };
 
-  // If not in favorite locations
-  if (!weatherStore.checkIfInFavoriteLocations()) {
-    // Display save location button
-    currentLocationName = `${locationModel.value}`;
-  
-    weatherStore.displaySaveLocationButton = true;
+    // Get weather forecast
+    weatherStore.getWeatherForecast(coordinates.lat, coordinates.lon);
+
+    // Update locationDataModel
+    weatherStore.currentLocationData = currentLocationData;
+
+    // If not in favorite locations
+    if (!weatherStore.checkIfInFavoriteLocations()) {
+      // Display save location button
+      currentLocationName = `${locationModel.value}`;
+
+      weatherStore.displaySaveLocationButton = true;
+    }
+  } catch (error) {
+    console.error("Problem happened while getting weather forecast: ", error);
+
+    // Display error modal
+    document.getElementById("error-modal").showModal();
   }
 }
 
@@ -53,7 +67,7 @@ function handleSaveLoaction() {
 
   weatherStore.displaySaveLocationButton = false;
 
-  locationModel.value = ""
+  locationModel.value = "";
 }
 </script>
 
@@ -95,11 +109,30 @@ function handleSaveLoaction() {
             :locationName="locationData.locationName"
             :lat="locationData.lat"
             :lon="locationData.lon"
-            @getWeatherForecast="weatherStore.getWeatherForecast(locationData.lat, locationData.lon)"
-            @removeFavoriteLocation="weatherStore.removeFavoriteLocation(locationData.locationName)"
+            @getWeatherForecast="
+              weatherStore.getWeatherForecast(
+                locationData.lat,
+                locationData.lon
+              )
+            "
+            @removeFavoriteLocation="
+              weatherStore.removeFavoriteLocation(locationData.locationName)
+            "
           />
         </div>
       </div>
     </div>
+
+    <!-- Error Dialog -->
+    <dialog id="error-modal" class="modal">
+      <div class="modal-box">
+        <h3 class="font-bold text-lg">Hello Error!</h3>
+        <p>Unable to get weather forecast for {{ locationModel }}</p>
+        <p class="py-4">Press ESC key or click outside to close</p>
+      </div>
+      <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+      </form>
+    </dialog>
   </div>
 </template>
