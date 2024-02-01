@@ -4,7 +4,7 @@ import FavoriteLocation from "@/components/card/FavoriteLocation.vue";
 
 // Icon
 import IconSearch from "@/components/icons/SearchBar.vue";
-import IconStar from "@/components/icons/Star.vue";
+import IconBookmark from "@/components/icons/Bookmark.vue";
 
 // Modals
 import ModalDocumentation from "@/components/modal/Documentation.vue";
@@ -109,13 +109,15 @@ function handleSaveLoaction() {
           </button>
 
           <div v-if="weatherStore.displaySaveLocationButton">
-            <button
-              type="button"
-              class="btn btn-ghost btn-circle ml-1"
-              @click="handleSaveLoaction"
-            >
-              <IconStar />
-            </button>
+            <div class="tooltip" data-tip="Favourite Location">
+              <button
+                type="button"
+                class="btn btn-ghost btn-circle ml-1"
+                @click="handleSaveLoaction"
+              >
+                <IconBookmark />
+              </button>
+            </div>
           </div>
         </div>
       </form>
