@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { useWeatherStore } from "@/stores/weather";
-import FavoriteLocation from "@/components/card/FavoriteLocation.vue";
+
+// Cards
+import CardFavoriteLocation from "@/components/card/FavoriteLocation.vue";
+import CardWeather from "@/components/card/Weather.vue";
 
 // Icon
 import IconSearch from "@/components/icons/SearchBar.vue";
@@ -128,7 +131,7 @@ function handleSaveLoaction() {
         v-for="locationData in weatherStore.favoriteLocations"
         :key="locationData.locationName"
       >
-        <FavoriteLocation
+        <CardFavoriteLocation
           :country="locationData.country"
           :locationName="locationData.locationName"
           :lat="locationData.lat"
@@ -141,6 +144,15 @@ function handleSaveLoaction() {
           "
         />
       </div>
+    </div>
+  </div>
+
+  <div class="flex">
+    <div
+      v-for="weatherData in weatherStore.currentWeatherData"
+      :key="weatherData.dt"
+    >
+      <CardWeather :data="weatherData" />
     </div>
   </div>
 

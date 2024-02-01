@@ -1,10 +1,11 @@
 import { defineStore } from "pinia";
 
 // Interfaces
-import { type GeographicalCoordinates, type LocationData } from "@/interfaces";
+import { type GeographicalCoordinates, type LocationData, type WeatherData } from "@/interfaces";
 
 // Favorite Location Array
-const favoriteLocations: LocationData[] = [];
+let favoriteLocations: LocationData[] = [];
+let currentWeatherData: WeatherData[] = [];
 
 let currentLocationData: LocationData = {
   locationName: "",
@@ -19,6 +20,7 @@ export const useWeatherStore = defineStore("weatherStore", {
     displaySaveLocationButton: false,
     favoriteLocations: favoriteLocations,
     currentLocationData: currentLocationData,
+    currentWeatherData: currentWeatherData
   }),
   actions: {
     async getGeographicalCoordinates(
@@ -27,7 +29,7 @@ export const useWeatherStore = defineStore("weatherStore", {
       // Build the url
       let url = this.openWeatherMapUrl + "/geo/1.0/direct";
 
-      let limit = 1;
+      let limit = 5;
 
       // Replace spaces with underscore
       location = location.replace(" ", "_");
@@ -77,7 +79,8 @@ export const useWeatherStore = defineStore("weatherStore", {
               this.currentLocationData.country = data.city.country;
             }
 
-            console.log(data);
+            // Save location weather data
+            this.currentWeatherData = data.list;
           });
       } catch (error) {
         console.error("Error getting weather forecast", error);
