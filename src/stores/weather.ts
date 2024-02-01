@@ -1,10 +1,16 @@
 import { defineStore } from "pinia";
 
 // Interfaces
-import { type GeographicalCoordinates } from "@/interfaces";
+import { type GeographicalCoordinates, type LocationData } from "@/interfaces";
 
 // Favorite Location Array
-const favoriteLocations: object[] = [];
+const favoriteLocations: LocationData[] = [];
+
+let currentLocationData: LocationData = {
+  locationName: "",
+  lat: 0,
+  lon: 0,
+};
 
 export const useWeatherStore = defineStore("weatherStore", {
   state: () => ({
@@ -12,7 +18,7 @@ export const useWeatherStore = defineStore("weatherStore", {
     openWeatherMapUrl: "https://api.openweathermap.org",
     displaySaveLocationButton: false,
     favoriteLocations: favoriteLocations,
-    currentLocationData: {},
+    currentLocationData: currentLocationData,
   }),
   actions: {
     async getGeographicalCoordinates(
@@ -64,7 +70,15 @@ export const useWeatherStore = defineStore("weatherStore", {
       try {
         await fetch(url)
           .then((response) => response.json())
-          .then((data) => console.log(data));
+          .then((data) => {
+            // If country not null
+            if (data.city.country != "") {
+              // Add country to currentLocationData
+              this.currentLocationData.country = data.city.country;
+            }
+
+            console.log(data);
+          });
       } catch (error) {
         console.error("Error getting weather forecast", error);
 
@@ -85,6 +99,7 @@ export const useWeatherStore = defineStore("weatherStore", {
       return true;
     },
     addToFavoriteLoactions() {
+      // Check if location exist in favorite locations
       if (!this.checkIfInFavoriteLocations()) {
         this.favoriteLocations.push(this.currentLocationData);
       } else {
@@ -101,5 +116,7 @@ export const useWeatherStore = defineStore("weatherStore", {
       this.favoriteLocations = newFavoriteLocations;
     },
   },
-  persist: true,
+  persist: {
+    paths: ["favoriteLocations"],
+  },
 });

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useWeatherStore } from "@/stores/weather";
-import FavoriteLocationCard from "@/components/FavoriteLocationCard.vue";
+import FavoriteLocation from "@/components/card/FavoriteLocation.vue";
+import ModalDocumentation from "@/components/modal/Documentation.vue";
+import IconDocumentation from "@/components/icons/IconDocumentation.vue";
 
 // Interfaces
 import { type GeographicalCoordinates, type LocationData } from "@/interfaces";
@@ -12,7 +14,11 @@ let locationModel = defineModel("");
 let currentLocationName = "";
 
 // Store
-weatherStore.currentLocationData = {};
+weatherStore.currentLocationData = {
+  locationName: "",
+  lat: 0,
+  lon: 0,
+};
 
 weatherStore.displaySaveLocationButton = false;
 
@@ -20,14 +26,24 @@ weatherStore.displaySaveLocationButton = false;
 async function handleSubmit() {
   weatherStore.displaySaveLocationButton = false;
 
+  // Error Dialog Modal
+  let errorModal = document.getElementById("error-modal") as HTMLDialogElement;
+
   // Get Coordinates
   try {
-    let coordinates: GeographicalCoordinates =
+    let coordinates: GeographicalCoordinates | null =
       await weatherStore.getGeographicalCoordinates(`${locationModel.value}`);
 
-    // Check if lat nad lon is ont null
-    if (coordinates.lat == null && coordinates.lat == null) {
+    // Check if lat or lon is ont null
+    if (
+      coordinates == null ||
+      coordinates.lat == null ||
+      coordinates.lat == null
+    ) {
       console.error("Error with geographical coordinates");
+
+      // Display error modal
+      errorModal.showModal();
 
       return null;
     }
@@ -56,7 +72,7 @@ async function handleSubmit() {
     console.error("Problem happened while getting weather forecast: ", error);
 
     // Display error modal
-    document.getElementById("error-modal").showModal();
+    errorModal.showModal();
   }
 }
 
@@ -69,10 +85,23 @@ function handleSaveLoaction() {
 
   locationModel.value = "";
 }
+
+function handleShowDocumentationModal() {
+  let documentationModal = document.getElementById("documentation-modal") as HTMLDialogElement;
+
+  // Show the documentation modal
+  documentationModal.showModal();
+}
 </script>
 
 <template>
   <div>
+    <div @click="handleShowDocumentationModal">
+      <IconDocumentation />
+    </div>
+
+    <ModalDocumentation />
+
     <div class="grid lg:grid-cols-12 sm:grid-cols-12">
       <!-- Your content goes here -->
       <div class="mx-auto lg:col-span-6 sm:col-span-6">
@@ -104,8 +133,12 @@ function handleSaveLoaction() {
       </div>
 
       <div class="mx-auto lg:col-span-6 sm:col-span-6">
-        <div v-for="locationData in weatherStore.favoriteLocations">
-          <FavoriteLocationCard
+        <div
+          v-for="locationData in weatherStore.favoriteLocations"
+          :key="locationData.locationName"
+        >
+          <FavoriteLocation
+            :country="locationData.country"
             :locationName="locationData.locationName"
             :lat="locationData.lat"
             :lon="locationData.lon"
@@ -125,11 +158,21 @@ function handleSaveLoaction() {
 
     <!-- Error Dialog -->
     <dialog id="error-modal" class="modal">
-      <div class="modal-box">
-        <h3 class="font-bold text-lg">Hello Error!</h3>
-        <p>Unable to get weather forecast for {{ locationModel }}</p>
-        <p class="py-4">Press ESC key or click outside to close</p>
+      <div class="modal-box border-2 border-rose-500">
+        <h3 class="font-bold text-lg text-rose-300 mb-3">Error</h3>
+
+        <p class="mb-3">
+          Unable to get weather forecast for {{ locationModel }}
+        </p>
+
+        <p>
+          Please enter a known location
+          <span class="font-bold">e.g Cape Townc</span>
+        </p>
+
+        <p class="py-3">Press ESC key or click outside to close</p>
       </div>
+
       <form method="dialog" class="modal-backdrop">
         <button>close</button>
       </form>

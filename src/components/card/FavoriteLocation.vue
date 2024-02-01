@@ -4,6 +4,7 @@ defineEmits(['getWeatherForecast', 'removeFavoriteLocation'])
 
 // props
 defineProps<{
+  country?: string
   locationName?: string
   lat?: number
   lon?: number
@@ -15,6 +16,7 @@ defineProps<{
     <div class="card-body">
       <h2 class="card-title">{{ locationName }}</h2>
 
+      <p v-if="country">Country: {{ country }}</p>
       <p>Latutide: {{ lat }}</p>
       <p>Longitude: {{ lon }}</p>
 
