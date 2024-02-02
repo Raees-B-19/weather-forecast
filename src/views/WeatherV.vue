@@ -147,14 +147,18 @@ function handleSaveLoaction() {
     </div>
   </div>
 
-  <div v-if="weatherStore.currentWeatherData.length > 0">
-    <div class="flex">
-      <div
-        v-for="weatherData in weatherStore.currentWeatherData"
-        :key="weatherData.dt"
-      >
-        <CardWeather :data="weatherData" />
+  <div v-if="weatherStore.currentWeatherData">
+    <div v-for="dayWeatherData in weatherStore.currentWeatherData">
+
+      <div class="grid grid-cols-5 gap-3">
+        <div
+          v-for="weatherData in dayWeatherData"
+          :key="weatherData.dt"
+        >
+          <CardWeather :data="weatherData" />
+        </div>
       </div>
+
     </div>
   </div>
 

@@ -1,11 +1,16 @@
 import { defineStore } from "pinia";
 
 // Interfaces
-import { type GeographicalCoordinates, type LocationData, type WeatherData } from "@/interfaces";
+import {
+  type GeographicalCoordinates,
+  type LocationData,
+  type WeatherData,
+  type WeatherDataArray
+} from "@/interfaces";
 
 // Favorite Location Array
 let favoriteLocations: LocationData[] = [];
-let currentWeatherData: WeatherData[] = [];
+let currentWeatherData: WeatherDataArray = [];
 
 let currentLocationData: LocationData = {
   locationName: "",
@@ -20,7 +25,7 @@ export const useWeatherStore = defineStore("weatherStore", {
     displaySaveLocationButton: false,
     favoriteLocations: favoriteLocations,
     currentLocationData: currentLocationData,
-    currentWeatherData: currentWeatherData
+    currentWeatherData: currentWeatherData,
   }),
   actions: {
     async getGeographicalCoordinates(
@@ -29,7 +34,7 @@ export const useWeatherStore = defineStore("weatherStore", {
       // Build the url
       let url = this.openWeatherMapUrl + "/geo/1.0/direct";
 
-      let limit = 5;
+      let limit = 1;
 
       // Replace spaces with underscore
       location = location.replace(" ", "_");
@@ -79,8 +84,39 @@ export const useWeatherStore = defineStore("weatherStore", {
               this.currentLocationData.country = data.city.country;
             }
 
+            // Organize via each day 
+            let currentWeatherDate = null;
+            let previousWeatherDate = null;
+            let dateArray = [];
+            let organizedDateArray = [];
+
+            // Store weather forecast data form api
+            let dataList = data.list;
+
+            // Loop over dataList
+            for (let i = 0; i < dataList.length; i++) {
+              // Current weather date
+              currentWeatherDate =
+                dataList[i].dt_txt.split(" ")[0];
+
+              // Check if the date has changed
+              if (currentWeatherDate !== previousWeatherDate && previousWeatherDate !== null) {
+                // Create a new array for the current date
+                organizedDateArray.push(dateArray);
+                
+                // Reset the array for the new date
+                dateArray = []; 
+              }
+
+              // Push the current index data
+              dateArray.push(dataList[i]);
+
+              // Update the previous date
+              previousWeatherDate = currentWeatherDate;
+            }
+
             // Save location weather data
-            this.currentWeatherData = data.list;
+            this.currentWeatherData = organizedDateArray;
           });
       } catch (error) {
         console.error("Error getting weather forecast", error);

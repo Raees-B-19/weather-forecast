@@ -29,3 +29,7 @@ export interface WeatherData {
   ],
   dt_txt: string;
 }
+
+export interface WeatherDataArray {
+  [index: number]: WeatherData[];
+}
