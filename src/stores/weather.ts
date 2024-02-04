@@ -4,7 +4,6 @@ import { defineStore } from "pinia";
 import {
   type GeographicalCoordinates,
   type LocationData,
-  type WeatherData,
   type WeatherDataArray
 } from "@/interfaces";
 
