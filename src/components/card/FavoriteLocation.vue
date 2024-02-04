@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // emits
-defineEmits(['getWeatherForecast', 'removeFavoriteLocation'])
+defineEmits(['getWeatherForecast', 'closeModal', 'removeFavoriteLocation'])
 
 // props
 defineProps<{
@@ -21,7 +21,7 @@ defineProps<{
       <p>Longitude: {{ lon }}</p>
 
       <div class="card-actions justify-start">
-        <button type="button" class="btn btn-primary" @click="$emit('getWeatherForecast')">Get Weather</button>
+        <button type="button" class="btn btn-primary" @click="$emit('getWeatherForecast'); $emit('closeModal')">Get Weather</button>
         <button type="button" class="btn btn-error" @click="$emit('removeFavoriteLocation')">Remove</button>
       </div>
     </div>

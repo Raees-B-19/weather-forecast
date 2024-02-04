@@ -1,39 +1,58 @@
+<script setup lang="ts">
+import IconBookmark from "@/components/icons/Bookmark.vue";
+</script>
+
 <template>
   <dialog id="documentation-modal" class="modal">
     <div class="modal-box">
-      <p>
-        This is a weather forecast website to estimate the next 5 days of weather
-      </p>
-      
-      <hr class="my-3">
-      
-      <h3 class="font-bold text-lg">How to use</h3>
+      <div class="mb-3">
+        <form method="dialog">
+          <button
+            class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+          >
+            ✕
+          </button>
+        </form>
+      </div>
 
-      <p class="my-3">
-        In the search bar enter a location. <span class="font-bold">e.g Cape Town</span>
-      </p>
+      <div>
+        <h3 class="font-bold text-lg">How to use</h3>
 
-      <p>
-        You should see the weather forecast data for the location.
-      </p>
+        <hr class="my-3" />
 
-      <p class="my-3">
-        The <span class="font-bold">Save Location Button</span> should appear if you did not save the location under your favourite locations.
-      </p>
+        <p>
+          This website allows you to estimate the weather for the next 5 days.
+        </p>
 
-      <p>
-        If you did save the location. A card with the location appear.
-      </p>
+        <p class="my-3">
+          Go to the search bar, enter a location,
+          <span class="font-bold">e.g. Cape Town</span>.
+        </p>
 
-      <p class="my-3">
-        If you did not get any weather forecast please try again or refresh the page.
-      </p>
+        <p>You should see the weather forecast data for the location.</p>
 
-      <p>
-        Enjoy the rest of your day.
-      </p>
+        <p class="my-3">
+          The <span class="font-bold">Save Location Icon </span>
+          <IconBookmark class="inline-block" /> should appear if you have not
+          saved the location under your favorite locations.
+        </p>
 
-      <p class="py-3">Press ESC key or click outside to close</p>
+        <p class="my-3">
+          If you did not receive any weather forecast, please try again or
+          refresh the page.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="font-bold text-lg">Favourite Locations</h3>
+
+        <hr class="my-3" />
+
+        <p>
+          If you have saved the location, you should see it under your favorite
+          locations.
+        </p>
+      </div>
     </div>
 
     <form method="dialog" class="modal-backdrop">

@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { useWeatherStore } from "@/stores/weather";
 
-// Cards
-import CardFavoriteLocation from "@/components/card/FavoriteLocation.vue";
+// navbar
+import Navbar from "@/components/Navbar.vue";
+
+// Card
 import CardWeather from "@/components/card/Weather.vue";
 
 // Icon
@@ -10,7 +12,6 @@ import IconSearch from "@/components/icons/SearchBar.vue";
 import IconBookmark from "@/components/icons/Bookmark.vue";
 
 // Modals
-import ModalDocumentation from "@/components/modal/Documentation.vue";
 import ModalError from "@/components/modal/Error.vue";
 
 // Interfaces
@@ -93,16 +94,20 @@ function handleSaveLoaction() {
 </script>
 
 <template>
+  <Navbar />
+
+  <hr class="border border-white/40 mb-5" />
+
   <div class="grid sm:grid-cols-12 lg:grid-cols-12">
-    <div class="sm:col-span-6 lg:col-span-6">
+    <div class="col-span-12">
       <form @submit.prevent="handleSubmit">
-        <div class="flex">
+        <div class="flex justify-center">
           <input
             type="text"
             id="locationInput"
-            class="input input-bordered"
+            class="input text-white/90 border-2 border-white/60 md:w-2/5"
             minlength="1"
-            placeholder="Search City"
+            placeholder="Search a location"
             v-model.trim="locationModel"
             required
           />
@@ -110,63 +115,40 @@ function handleSaveLoaction() {
           <button type="submit" class="btn btn-ghost btn-circle ml-1">
             <IconSearch />
           </button>
-
-          <div v-if="weatherStore.displaySaveLocationButton">
-            <div class="tooltip" data-tip="Favourite Location">
-              <button
-                type="button"
-                class="btn btn-ghost btn-circle ml-1"
-                @click="handleSaveLoaction"
-              >
-                <IconBookmark />
-              </button>
-            </div>
-          </div>
         </div>
       </form>
-    </div>
 
-    <div class="mx-auto sm:col-span-6 lg:col-span-6">
-      <div
-        v-for="locationData in weatherStore.favoriteLocations"
-        :key="locationData.locationName"
-      >
-        <CardFavoriteLocation
-          :country="locationData.country"
-          :locationName="locationData.locationName"
-          :lat="locationData.lat"
-          :lon="locationData.lon"
-          @getWeatherForecast="
-            weatherStore.getWeatherForecast(locationData.lat, locationData.lon)
-          "
-          @removeFavoriteLocation="
-            weatherStore.removeFavoriteLocation(locationData.locationName)
-          "
-        />
+      <div v-if="weatherStore.displaySaveLocationButton">
+        <div class="mx-auto w-fit mt-3">
+          <button
+            type="button"
+            class="btn btn-success bg-transparent text-white/70 hover:text-white"
+            @click="handleSaveLoaction"
+          >
+            Favourite Location <IconBookmark />
+          </button>
+        </div>
       </div>
     </div>
+
+    <div class="mx-auto sm:col-span-6 lg:col-span-6"></div>
   </div>
 
-  <div v-if="weatherStore.currentWeatherData">
+  <div v-if="Object.keys(weatherStore.currentWeatherData).length > 0">
     <div v-for="dayWeatherData in weatherStore.currentWeatherData">
-
       <div class="grid grid-cols-5 gap-3">
-        <div
-          v-for="weatherData in dayWeatherData"
-          :key="weatherData.dt"
-        >
+        <div v-for="weatherData in dayWeatherData" :key="weatherData.dt">
           <CardWeather :data="weatherData" />
         </div>
       </div>
-
     </div>
   </div>
 
   <div v-else class="mt-4">
-    Please enter a location to get the Weather Forecast
+    <p class="text-center">
+      Please enter a location to get the Weather Forecast
+    </p>
   </div>
-
-  <ModalDocumentation />
 
   <ModalError :locationName="`${locationModel}`" />
 </template>
