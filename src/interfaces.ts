@@ -4,7 +4,6 @@ export interface GeographicalCoordinates {
 }
 
 export interface LocationData {
-  country?: string;
   locationName: string;
   lat: number;
   lon: number;
@@ -28,11 +27,11 @@ export interface WeatherData {
     }
   ],
   wind: {
-    speed: number,
+    speed: number, // metres per second
     deg: number,
     gust: number
   }
-  dt_txt: string;
+  dt_txt: string; // 2024-02-05 00:00:00
 }
 
 export interface WeatherDataArray {

@@ -7,7 +7,8 @@ import { RouterLink } from "vue-router";
     <h2 class="mb-4 text-2xl font-bold">
       Looks like you are somewhere unknown.
     </h2>
-    <p class="mb-4 text-lg">Please press the button below to return back.</p>
+    
+    <p class="mb-4 text-lg">Please use the button below to return back.</p>
 
     <RouterLink to="/">
       <div class="btn btn-primary">

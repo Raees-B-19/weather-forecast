@@ -9,7 +9,6 @@ import CardWeather from "@/components/card/Weather.vue";
 
 // Icon
 import IconSearch from "@/components/icons/SearchBar.vue";
-import IconArrow from "@/components/icons/Arrow.vue";
 import IconBookmark from "@/components/icons/Bookmark.vue";
 
 // Modals
@@ -88,9 +87,8 @@ function handleSaveLoaction() {
   // Add to favorite lcoations
   weatherStore.addToFavoriteLoactions();
 
+  // Make favourite loaction button not display
   weatherStore.displaySaveLocationButton = false;
-
-  locationModel.value = "";
 }
 
 // Months
@@ -130,6 +128,7 @@ function getDateInWordFormat(weatherDate: string) {
   // Get day
   let currentDateDayOfWeek = daysOfWeek[currentDate.getDay()];
 
+  // Monday Feb 2024
   return `${currentDateDayOfWeek} ${currentDateMonth} ${currentDate.getFullYear()}`;
 }
 </script>
@@ -141,6 +140,7 @@ function getDateInWordFormat(weatherDate: string) {
 
   <div class="grid my-4 sm:grid-cols-12 lg:grid-cols-12">
     <div class="col-span-12">
+      <!-- Search location form -->
       <form @submit.prevent="handleSubmit">
         <div class="flex justify-center">
           <input
@@ -159,6 +159,7 @@ function getDateInWordFormat(weatherDate: string) {
         </div>
       </form>
 
+      <!-- Save location button if -->
       <div
         v-if="weatherStore.displaySaveLocationButton"
         class="mx-auto mb-3 w-fit mt-3"
@@ -174,41 +175,31 @@ function getDateInWordFormat(weatherDate: string) {
     </div>
   </div>
 
+  <!-- Weather forecast if -->
   <div v-if="Object.keys(weatherStore.currentWeatherData).length > 0">
     <hr class="border border-white/40 mb-4" />
 
+    <!-- Current location name -->
     <p class="text-left text-2xl font-medium mb-4">
       {{ weatherStore.currentLocationData.locationName }}
     </p>
 
-    
+    <!-- Current weather data loop -->
     <div v-for="(dayWeatherData, index) in weatherStore.currentWeatherData">
       <div class="collapse collapse-arrow bg-base-200 mb-2">
-        <input type="checkbox" />
         
+        <!-- Collapse Open if -->
+        <input v-if="index === 0" type="checkbox" checked />
+        <!-- Collapse Open else -->
+        <input v-else type="checkbox" />
+        
+        <!-- Weather date -->
         <div class="collapse-title text-xl font-medium">
           {{ getDateInWordFormat(dayWeatherData[index].dt_txt.split(" ")[0]) }} <span v-if="index === 0">- Today</span>
         </div>
         
-        <div class="collapse-content ">
-          <div>
-            <div class="flex">
-              <p>
-                Min: {{ dayWeatherData[index].main.temp_min }} &degC
-              </p>
-              <p>
-                Max: {{ dayWeatherData[index].main.temp_max }} &degC
-              </p>
-            </div>
-            <p>
-              Humidity: {{ dayWeatherData[index].main.humidity }}%
-            </p>
-            <p>
-              Wind Speed: {{ dayWeatherData[index].wind.speed }} meter/sec
-              <IconArrow :degRotation="dayWeatherData[index].wind.deg"/>
-            </p>
-          </div>
-          
+        <!-- Weather forecast data display -->
+        <div class="collapse-content">  
           <div class="grid gap-3 md:grid-cols-3">
             <div
               v-for="weatherData in dayWeatherData"
@@ -222,6 +213,7 @@ function getDateInWordFormat(weatherDate: string) {
     </div>
   </div>
 
+  <!-- Weather forecast else -->
   <div v-else class="mt-4">
     <p class="text-center">
       Please enter a location to get the Weather Forecast

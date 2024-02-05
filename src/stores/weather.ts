@@ -4,19 +4,21 @@ import { defineStore } from "pinia";
 import {
   type GeographicalCoordinates,
   type LocationData,
-  type WeatherDataArray
+  type WeatherDataArray,
 } from "@/interfaces";
 
 // Favorite Location Array
 let favoriteLocations: LocationData[] = [];
 let currentWeatherData: WeatherDataArray = [];
 
+// Current locaitond data
 let currentLocationData: LocationData = {
   locationName: "",
   lat: 0,
   lon: 0,
 };
 
+// Export weather store
 export const useWeatherStore = defineStore("weatherStore", {
   state: () => ({
     apiKey: "c71a382e51b62d85bce7fe1e6db2810f",
@@ -33,7 +35,7 @@ export const useWeatherStore = defineStore("weatherStore", {
       // Build the url
       let url = this.openWeatherMapUrl + "/geo/1.0/direct";
 
-      // Number of the locations ( max 5)
+      // Number of the locations ( max 5 )
       let limit = 1;
 
       // Replace spaces with underscore
@@ -68,12 +70,13 @@ export const useWeatherStore = defineStore("weatherStore", {
       }
     },
     async getWeatherForecast(lat: number, lon: number) {
+      // Build the url
       let url = this.openWeatherMapUrl + "/data/2.5/forecast";
 
       // Add coordinates to url
       url += `?lat=${lat}&lon=${lon}`;
       url += `&units=metric`; // for celsuis
-      url += `&appid=${this.apiKey}`
+      url += `&appid=${this.apiKey}`;
 
       // Make Fetch
       try {
@@ -83,34 +86,36 @@ export const useWeatherStore = defineStore("weatherStore", {
             // Update currentLocationData location name
             this.currentLocationData.locationName = data.city.name;
 
-            // Organize via each day 
+            // Organize via each day
             let currentWeatherDate = null;
             let previousWeatherDate = null;
             let dateArray = [];
             let organizedDateArray = [];
 
-            // Store weather forecast data form api
+            // Store weather forecast data from api
             let dataList = data.list;
 
             // Loop over dataList
             for (let i = 0; i < dataList.length; i++) {
               // Current weather date
-              currentWeatherDate =
-                dataList[i].dt_txt.split(" ")[0];
+              currentWeatherDate = dataList[i].dt_txt.split(" ")[0];
 
               // Check if the date has changed
-              if (currentWeatherDate !== previousWeatherDate && previousWeatherDate !== null) {
-                // Create a new array for the current date
+              if (
+                currentWeatherDate !== previousWeatherDate &&
+                previousWeatherDate !== null
+              ) {
+                // Push dateArray into organizedDateArray
                 organizedDateArray.push(dateArray);
-                
+
                 // Reset the array for the new date
-                dateArray = []; 
+                dateArray = [];
               }
 
-              // Push the current index data
+              // Push the current data into dateArray
               dateArray.push(dataList[i]);
 
-              // Update the previous date
+              // Update the previous weather date for next iteration
               previousWeatherDate = currentWeatherDate;
             }
 
@@ -124,21 +129,25 @@ export const useWeatherStore = defineStore("weatherStore", {
       }
     },
     checkIfInFavoriteLocations() {
+      // Find current location name in favorite locations
       let newFavoriteLocation = this.favoriteLocations.find(
         (location) =>
           location.locationName == this.currentLocationData.locationName
       );
 
-      // Not in favorite locations
+      // Check if in favorite locations
       if (newFavoriteLocation == undefined) {
+        // Not in favorite locations
         return false;
       }
 
+      // In favorite locations
       return true;
     },
     addToFavoriteLoactions() {
       // Check if location exist in favorite locations
       if (!this.checkIfInFavoriteLocations()) {
+        // Doesn't exist in favorite locations
         this.favoriteLocations.push(this.currentLocationData);
       } else {
         console.log("In favs already");

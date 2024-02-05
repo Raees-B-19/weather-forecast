@@ -1,6 +1,8 @@
 import './assets/main.css'
 
 import { createApp } from 'vue'
+
+// Pinia Storage
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
@@ -9,7 +11,7 @@ import router from './router'
 
 const app = createApp(App)
 
-// Pinia
+// Pinia Setup
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
 

@@ -28,13 +28,15 @@ function closeModal(modalId: string) {
         </form>
       </div>
 
+      <p class="text-lg font-bold mb-3">Favourite Locations</p>
+
+      <!-- Favorite Locations if -->
       <div v-if="weatherStore.favoriteLocations.length > 0">
-        <p class="text-2xl font-bold mb-3">Favourite Locations</p>
-        
         <div
           v-for="locationData in weatherStore.favoriteLocations"
           :key="locationData.locationName"
         >
+        <!-- Display favorite location -->
           <CardFavoriteLocation
             :country="`${locationData.country}`"
             :locationName="locationData.locationName"
@@ -52,6 +54,7 @@ function closeModal(modalId: string) {
         </div>
       </div>
 
+      <!-- Favorite Locations else -->
       <div v-else>
         <p>
           No favorite locations for weather updates? Explore and save your

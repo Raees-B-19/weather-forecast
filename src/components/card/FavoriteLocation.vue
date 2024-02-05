@@ -26,6 +26,7 @@ function confirmPopupOpen(modalLocationName: string) {
     <h2 class="text-2xl font-medium mb-2">{{ locationName }}</h2>
 
     <div class="card-actions justify-start">
+      <!-- Get weather forecast -->
       <button
         type="button"
         class="btn btn-primary"
@@ -37,6 +38,7 @@ function confirmPopupOpen(modalLocationName: string) {
         Get Weather
       </button>
       
+      <!-- Remove from favourite locations -->
       <button
         type="button"
         class="btn btn-error"

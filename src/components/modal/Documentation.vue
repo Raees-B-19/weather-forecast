@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// Icon
 import IconBookmark from "@/components/icons/Bookmark.vue";
 </script>
 
@@ -15,6 +16,7 @@ import IconBookmark from "@/components/icons/Bookmark.vue";
         </form>
       </div>
 
+      <!-- How to use -->
       <div>
         <h3 class="font-bold text-lg">How to use</h3>
 
@@ -43,6 +45,7 @@ import IconBookmark from "@/components/icons/Bookmark.vue";
         </p>
       </div>
 
+      <!-- Favourite Locations -->
       <div>
         <h3 class="font-bold text-lg">Favourite Locations</h3>
 

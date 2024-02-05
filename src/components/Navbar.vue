@@ -23,6 +23,7 @@ function handleShowModal(modalId: string) {
   <div class="navbar bg-base-100 mb-5 border-2 border-white/60 rounded-md">
     <div class="navbar-start">
       <div class="dropdown">
+        <!-- Icon burger menu -->
         <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
           <IconBurgerMenu />
         </div>
@@ -32,6 +33,7 @@ function handleShowModal(modalId: string) {
           class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
         >
           <li>
+            <!-- Icon Documentation -->
             <div
               @click="handleShowModal('documentation-modal')"
               class="flex items-center cursor-pointer"
@@ -42,6 +44,7 @@ function handleShowModal(modalId: string) {
             </div>
           </li>
           <li>
+            <!-- Icon Bookmark -->
             <div
               @click="handleShowModal('favourite-locations-modal')"
               class="flex items-center cursor-pointer"

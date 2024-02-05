@@ -30,14 +30,16 @@ function confirmPopupClose(modalLocationName: string) {
         Remove {{ locationName }} from favourite locaton?
       </h3>
 
+      <!-- Cancel -->
       <button
-        type="button"
-        class="btn btn-info"
-        @click="confirmPopupClose(locationName)"
+      type="button"
+      class="btn btn-primary"
+      @click="confirmPopupClose(locationName)"
       >
         Cancel
       </button>
-
+      
+      <!-- Remove -->
       <button
         type="button"
         class="btn btn-error ml-2"
