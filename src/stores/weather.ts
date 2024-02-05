@@ -70,7 +70,9 @@ export const useWeatherStore = defineStore("weatherStore", {
       let url = this.openWeatherMapUrl + "/data/2.5/forecast";
 
       // Add coordinates to url
-      url += `?lat=${lat}&lon=${lon}&appid=${this.apiKey}`;
+      url += `?lat=${lat}&lon=${lon}`;
+      url += `&units=metric`; // for celsuis
+      url += `&appid=${this.apiKey}`
 
       // Make Fetch
       try {

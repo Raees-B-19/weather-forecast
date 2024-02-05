@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// Store
 import { useWeatherStore } from "@/stores/weather";
 
 const weatherStore = useWeatherStore();
@@ -33,10 +34,8 @@ function closeModal(modalId: string) {
           :key="locationData.locationName"
         >
           <CardFavoriteLocation
-            :country="locationData.country"
+            :country="`${locationData.country}`"
             :locationName="locationData.locationName"
-            :lat="locationData.lat"
-            :lon="locationData.lon"
             @getWeatherForecast="
               weatherStore.getWeatherForecast(
                 locationData.lat,

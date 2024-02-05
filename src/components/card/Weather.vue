@@ -24,8 +24,8 @@ defineProps<{
 
       <p>{{ (data.weather[0].description) }}</p>
 
-      <p>Min: {{ data.main.temp_min }}</p>
-      <p>Max: {{ data.main.temp_max }}</p>
+      <p>Min: {{ data.main.temp_min }} &degC</p>
+      <p>Max: {{ data.main.temp_max }} &degC</p>
 
       <div class="card-actions justify-end"></div>
     </div>
