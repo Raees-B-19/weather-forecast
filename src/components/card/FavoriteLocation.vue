@@ -22,32 +22,28 @@ function confirmPopupOpen(modalLocationName: string) {
 </script>
 
 <template>
-  <div class="card w-96 bg-base-100 shadow-xl mb-3">
-    <div class="card-body">
-      <h2 class="card-title">{{ locationName }}</h2>
+  <div class="border-2 border-white/30 p-2 rounded-md">
+    <h2 class="text-2xl font-medium mb-2">{{ locationName }}</h2>
 
-      <p v-if="country">Country: {{ country }}</p>
-
-      <div class="card-actions justify-start">
-        <button
-          type="button"
-          class="btn btn-primary"
-          @click="
-            $emit('getWeatherForecast');
-            $emit('closeModal');
-          "
-        >
-          Get Weather
-        </button>
-        
-        <button
-          type="button"
-          class="btn btn-error"
-          @click="confirmPopupOpen(locationName)"
-        >
-          Remove
-        </button>
-      </div>
+    <div class="card-actions justify-start">
+      <button
+        type="button"
+        class="btn btn-primary"
+        @click="
+          $emit('getWeatherForecast');
+          $emit('closeModal');
+        "
+      >
+        Get Weather
+      </button>
+      
+      <button
+        type="button"
+        class="btn btn-error"
+        @click="confirmPopupOpen(locationName)"
+      >
+        Remove
+      </button>
     </div>
   </div>
 

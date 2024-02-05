@@ -121,22 +121,24 @@ const daysOfWeek = [
 
 // Convert date to words
 function getDateInWordFormat(weatherDate: string) {
-  const currentDate = new Date(weatherDate);
+  let currentDate = new Date(weatherDate);
 
-  const month = months[currentDate.getMonth()];
-  
-  const dayOfWeek = daysOfWeek[currentDate.getDay()];
+  // Get month
+  let currentDateMonth = months[currentDate.getMonth()];
 
-  return `${dayOfWeek} ${month} ${currentDate.getFullYear()}`
+  // Get day
+  let currentDateDayOfWeek = daysOfWeek[currentDate.getDay()];
+
+  return `${currentDateDayOfWeek} ${currentDateMonth} ${currentDate.getFullYear()}`;
 }
 </script>
 
 <template>
   <Navbar />
 
-  <hr class="border border-white/40 mb-5" />
+  <hr class="border border-white/40" />
 
-  <div class="grid sm:grid-cols-12 lg:grid-cols-12">
+  <div class="grid my-4 sm:grid-cols-12 lg:grid-cols-12">
     <div class="col-span-12">
       <form @submit.prevent="handleSubmit">
         <div class="flex justify-center">
@@ -169,17 +171,21 @@ function getDateInWordFormat(weatherDate: string) {
         </button>
       </div>
     </div>
-
-    <div class="mx-auto sm:col-span-6 lg:col-span-6"></div>
   </div>
 
   <div v-if="Object.keys(weatherStore.currentWeatherData).length > 0">
+    <hr class="border border-white/40 mb-4" />
+
+    <p class="text-left text-2xl font-medium mb-4">
+      {{ weatherStore.currentLocationData.locationName }}
+    </p>
+
     <div v-for="(dayWeatherData, index) in weatherStore.currentWeatherData">
-      <div class="collapse collapse-arrow bg-base-200 mb-4">
-        <input type="checkbox" checked />
+      <div class="collapse collapse-arrow bg-base-200 mb-2">
+        <input type="checkbox" />
 
         <div class="collapse-title text-xl font-medium">
-          {{ getDateInWordFormat(dayWeatherData[index].dt_txt.split(" ")[0]) }}
+          {{ getDateInWordFormat(dayWeatherData[index].dt_txt.split(" ")[0]) }} <span v-if="index === 0">- Today</span>
         </div>
 
         <div class="collapse-content grid gap-3 md:grid-cols-3">

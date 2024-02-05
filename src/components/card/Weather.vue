@@ -20,7 +20,7 @@ function displayWeatherDescription(description: string) {
 
 <template>
   <!-- <code>{{ data }}</code> -->
-  <div class="border-2 border-pink-500 rounded-md p-2 h-56">
+  <div class="border-2 border-info/70 rounded-md p-2 h-56">
     <h2 class="card-title justify-center">{{ data.dt_txt.split(' ')[1] }}</h2>
   
     <img
@@ -38,19 +38,27 @@ function displayWeatherDescription(description: string) {
   
     <div class="flex justify-center">
       <div class="text-center">
-        <p>Min</p>
-        <p class="text-xl">
-          {{ data.main.temp_min }} &degC
-        </p>
+        <div class="border border-info/50"></div>
+        
+        <div class="mr-2 mt-1">
+          <p class="font-medium">Min</p>
+          <p class="text-xl">
+            {{ data.main.temp_min }} &degC
+          </p>
+        </div>
       </div>
-
-      <div class="border border-blue-600 mx-3"></div>
-
+      
+      <div class="border border-info/50"></div>
+      
       <div class="text-center">
-        <p>Max</p>
-        <p class="text-xl">
-          {{ data.main.temp_max }} &degC
-        </p>
+        <div class="border border-info/50"></div>
+        
+        <div class="ml-2 mt-1">
+          <p class="font-medium">Max</p>
+          <p class="text-xl">
+            {{ data.main.temp_max }} &degC
+          </p>
+        </div>
       </div>
       
     </div>

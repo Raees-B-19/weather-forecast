@@ -33,6 +33,7 @@ export const useWeatherStore = defineStore("weatherStore", {
       // Build the url
       let url = this.openWeatherMapUrl + "/geo/1.0/direct";
 
+      // Number of the locations ( max 5)
       let limit = 1;
 
       // Replace spaces with underscore
@@ -71,9 +72,7 @@ export const useWeatherStore = defineStore("weatherStore", {
 
       // Add coordinates to url
       url += `?lat=${lat}&lon=${lon}`;
-      // url += `&units=imperail`; // for fahrenheit 
       url += `&units=metric`; // for celsuis
-      // url += `&units=standard`; // for kelvin
       url += `&appid=${this.apiKey}`
 
       // Make Fetch
@@ -81,11 +80,8 @@ export const useWeatherStore = defineStore("weatherStore", {
         await fetch(url)
           .then((response) => response.json())
           .then((data) => {
-            // If country not null
-            if (data.city.country != "") {
-              // Add country to currentLocationData
-              this.currentLocationData.country = data.city.country;
-            }
+            // Update currentLocationData location name
+            this.currentLocationData.locationName = data.city.name;
 
             // Organize via each day 
             let currentWeatherDate = null;

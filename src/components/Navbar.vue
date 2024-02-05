@@ -17,7 +17,6 @@ function handleShowModal(modalId: string) {
   // Show the documentation modal
   documentationModal.showModal();
 }
-
 </script>
 
 <template>
@@ -60,7 +59,8 @@ function handleShowModal(modalId: string) {
       <h1 class="text-x1 font-bold text-white/75">Weather Forecast</h1>
     </div>
 
-    <div class="navbar-end"></div>
+    <div class="navbar-end">
+    </div>
   </div>
 
   <ModalDocumentation />

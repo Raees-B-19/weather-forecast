@@ -29,6 +29,8 @@ function closeModal(modalId: string) {
       </div>
 
       <div v-if="weatherStore.favoriteLocations.length > 0">
+        <p class="text-2xl font-bold mb-3">Favourite Locations</p>
+        
         <div
           v-for="locationData in weatherStore.favoriteLocations"
           :key="locationData.locationName"
