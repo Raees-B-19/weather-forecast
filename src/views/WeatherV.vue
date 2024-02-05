@@ -166,7 +166,7 @@ function getDateInWordFormat(weatherDate: string) {
       >
         <button
           type="button"
-          class="btn btn-success bg-transparent text-white/70 hover:text-white"
+          class="btn btn-success bg-transparent text-white/70 hover:text-white/90"
           @click="handleSaveLoaction"
         >
           Favourite Location <IconBookmark />

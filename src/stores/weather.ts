@@ -86,6 +86,12 @@ export const useWeatherStore = defineStore("weatherStore", {
             // Update currentLocationData location name
             this.currentLocationData.locationName = data.city.name;
 
+            // If country not null
+            if (data.city.country != "") {
+              // Add country to currentLocationData
+              this.currentLocationData.country = data.city.country;
+            }
+
             // Organize via each day
             let currentWeatherDate = null;
             let previousWeatherDate = null;

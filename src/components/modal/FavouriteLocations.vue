@@ -9,7 +9,7 @@ import CardFavoriteLocation from "@/components/card/FavoriteLocation.vue";
 
 // Close Modal
 function closeModal(modalId: string) {
-  let modal = document.getElementById(modalId) as HTMLDialogElement
+  let modal = document.getElementById(modalId) as HTMLDialogElement;
 
   modal.close();
 }
@@ -30,13 +30,15 @@ function closeModal(modalId: string) {
 
       <p class="text-lg font-bold mb-3">Favourite Locations</p>
 
+      <hr class="my-3" />
+
       <!-- Favorite Locations if -->
       <div v-if="weatherStore.favoriteLocations.length > 0">
         <div
           v-for="locationData in weatherStore.favoriteLocations"
           :key="locationData.locationName"
         >
-        <!-- Display favorite location -->
+          <!-- Display favorite location -->
           <CardFavoriteLocation
             :country="`${locationData.country}`"
             :locationName="locationData.locationName"

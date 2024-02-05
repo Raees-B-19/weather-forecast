@@ -26,14 +26,14 @@ function confirmPopupClose(modalLocationName: string) {
         </button>
       </form>
 
-      <h3 class="font-bold text-lg mb-3">
-        Remove {{ locationName }} from favourite locaton?
+      <h3 class="text-lg mb-3">
+        Remove <span class="font-semibold">{{ locationName }}</span> from your favourite locatons?
       </h3>
 
       <!-- Cancel -->
       <button
       type="button"
-      class="btn btn-primary"
+      class="btn btn-success bg-transparent text-white/70 hover:text-white/90"
       @click="confirmPopupClose(locationName)"
       >
         Cancel
@@ -42,7 +42,7 @@ function confirmPopupClose(modalLocationName: string) {
       <!-- Remove -->
       <button
         type="button"
-        class="btn btn-error ml-2"
+        class="btn btn-error bg-transparent text-white/70 ml-2 hover:text-white/90"
         @click="
           confirmPopupClose(locationName);
           $emit('removeFavoriteLocation');
