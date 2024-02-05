@@ -24,7 +24,7 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 ## Project Setup
 
 ```sh
-npm install
+npm i
 ```
 
 ### Compile and Hot-Reload for Development
@@ -38,3 +38,9 @@ npm run dev
 ```sh
 npm run build
 ```
+
+## Resources
+- https://openweathermap.org/ - Weather Api
+- https://vuejs.org/ - Vue Js
+- https://pinia.vuejs.org/ - Pinia
+- https://prazdevs.github.io/pinia-plugin-persistedstate/ - Pinia Persisted State
