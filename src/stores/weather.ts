@@ -71,7 +71,9 @@ export const useWeatherStore = defineStore("weatherStore", {
 
       // Add coordinates to url
       url += `?lat=${lat}&lon=${lon}`;
+      // url += `&units=imperail`; // for fahrenheit 
       url += `&units=metric`; // for celsuis
+      // url += `&units=standard`; // for kelvin
       url += `&appid=${this.apiKey}`
 
       // Make Fetch

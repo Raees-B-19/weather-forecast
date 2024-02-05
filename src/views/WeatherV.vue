@@ -91,6 +91,44 @@ function handleSaveLoaction() {
 
   locationModel.value = "";
 }
+
+// Months
+const months = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
+// Days of the week
+const daysOfWeek = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+
+// Convert date to words
+function getDateInWordFormat(weatherDate: string) {
+  const currentDate = new Date(weatherDate);
+
+  const month = months[currentDate.getMonth()];
+  
+  const dayOfWeek = daysOfWeek[currentDate.getDay()];
+
+  return `${dayOfWeek} ${month} ${currentDate.getFullYear()}`
+}
 </script>
 
 <template>
@@ -118,16 +156,17 @@ function handleSaveLoaction() {
         </div>
       </form>
 
-      <div v-if="weatherStore.displaySaveLocationButton">
-        <div class="mx-auto w-fit mt-3">
-          <button
-            type="button"
-            class="btn btn-success bg-transparent text-white/70 hover:text-white"
-            @click="handleSaveLoaction"
-          >
-            Favourite Location <IconBookmark />
-          </button>
-        </div>
+      <div
+        v-if="weatherStore.displaySaveLocationButton"
+        class="mx-auto mb-3 w-fit mt-3"
+      >
+        <button
+          type="button"
+          class="btn btn-success bg-transparent text-white/70 hover:text-white"
+          @click="handleSaveLoaction"
+        >
+          Favourite Location <IconBookmark />
+        </button>
       </div>
     </div>
 
@@ -135,10 +174,22 @@ function handleSaveLoaction() {
   </div>
 
   <div v-if="Object.keys(weatherStore.currentWeatherData).length > 0">
-    <div v-for="dayWeatherData in weatherStore.currentWeatherData">
-      <div class="grid grid-cols-5 gap-3">
-        <div v-for="weatherData in dayWeatherData" :key="weatherData.dt">
-          <CardWeather :data="weatherData" />
+    <div v-for="(dayWeatherData, index) in weatherStore.currentWeatherData">
+      <div class="collapse collapse-arrow bg-base-200 mb-4">
+        <input type="checkbox" checked />
+
+        <div class="collapse-title text-xl font-medium">
+          {{ getDateInWordFormat(dayWeatherData[index].dt_txt.split(" ")[0]) }}
+        </div>
+
+        <div class="collapse-content grid gap-3 md:grid-cols-3">
+          <div
+            class=""
+            v-for="weatherData in dayWeatherData"
+            :key="weatherData.dt"
+          >
+            <CardWeather :data="weatherData" />
+          </div>
         </div>
       </div>
     </div>
