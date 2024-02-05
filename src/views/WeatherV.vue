@@ -9,6 +9,7 @@ import CardWeather from "@/components/card/Weather.vue";
 
 // Icon
 import IconSearch from "@/components/icons/SearchBar.vue";
+import IconArrow from "@/components/icons/Arrow.vue";
 import IconBookmark from "@/components/icons/Bookmark.vue";
 
 // Modals
@@ -180,21 +181,41 @@ function getDateInWordFormat(weatherDate: string) {
       {{ weatherStore.currentLocationData.locationName }}
     </p>
 
+    
     <div v-for="(dayWeatherData, index) in weatherStore.currentWeatherData">
       <div class="collapse collapse-arrow bg-base-200 mb-2">
         <input type="checkbox" />
-
+        
         <div class="collapse-title text-xl font-medium">
           {{ getDateInWordFormat(dayWeatherData[index].dt_txt.split(" ")[0]) }} <span v-if="index === 0">- Today</span>
         </div>
-
-        <div class="collapse-content grid gap-3 md:grid-cols-3">
-          <div
-            class=""
-            v-for="weatherData in dayWeatherData"
-            :key="weatherData.dt"
-          >
-            <CardWeather :data="weatherData" />
+        
+        <div class="collapse-content ">
+          <div>
+            <div class="flex">
+              <p>
+                Min: {{ dayWeatherData[index].main.temp_min }} &degC
+              </p>
+              <p>
+                Max: {{ dayWeatherData[index].main.temp_max }} &degC
+              </p>
+            </div>
+            <p>
+              Humidity: {{ dayWeatherData[index].main.humidity }}%
+            </p>
+            <p>
+              Wind Speed: {{ dayWeatherData[index].wind.speed }} meter/sec
+              <IconArrow :degRotation="dayWeatherData[index].wind.deg"/>
+            </p>
+          </div>
+          
+          <div class="grid gap-3 md:grid-cols-3">
+            <div
+              v-for="weatherData in dayWeatherData"
+              :key="weatherData.dt"
+            >
+              <CardWeather :data="weatherData" />
+            </div>
           </div>
         </div>
       </div>

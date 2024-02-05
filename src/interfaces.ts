@@ -27,6 +27,11 @@ export interface WeatherData {
       icon: string
     }
   ],
+  wind: {
+    speed: number,
+    deg: number,
+    gust: number
+  }
   dt_txt: string;
 }
 
