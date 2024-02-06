@@ -24,7 +24,7 @@ function handleShowModal(modalId: string) {
     <div class="navbar-start">
       <div class="dropdown">
         <!-- Icon burger menu -->
-        <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
+        <div tabindex="0" role="button" class="btn btn-ghost btn-circle" aria-label="Navigation Dropdown Button">
           <IconBurgerMenu />
         </div>
 
