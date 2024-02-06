@@ -76,6 +76,7 @@ import IconBookmark from "@/components/icons/Bookmark.vue";
         </p>
       </div>
 
+      <!-- Resources -->
       <div class="mt-3">
         <p class="font-bold text-lg">Resources</p>
 
