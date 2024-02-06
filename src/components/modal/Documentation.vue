@@ -18,7 +18,7 @@ import IconBookmark from "@/components/icons/Bookmark.vue";
 
       <!-- How to use -->
       <div>
-        <h3 class="font-bold text-lg">How to use</h3>
+        <p class="font-bold text-lg">How to use</p>
 
         <hr class="my-3" />
 
@@ -47,7 +47,7 @@ import IconBookmark from "@/components/icons/Bookmark.vue";
 
       <!-- Favourite Locations -->
       <div>
-        <h3 class="font-bold text-lg">About Favourite Locations</h3>
+        <p class="font-bold text-lg">About Favourite Locations</p>
 
         <hr class="my-3" />
 
