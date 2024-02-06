@@ -27,9 +27,9 @@ function displayWeatherDescription(description: string) {
       <div>
         <div class="mb-3">
           <!-- Time -->
-          <h2 class="card-title justify-center">
+          <p class="card-title justify-center">
             {{ data.dt_txt.split(" ")[1] }}
-          </h2>
+          </p>
 
           <!-- Icon -->
           <img
@@ -43,7 +43,7 @@ function displayWeatherDescription(description: string) {
           />
 
           <!-- Description if -->
-          <h3 v-if="displayWeatherDescription(
+          <p v-if="displayWeatherDescription(
             data.weather[0].description.split(' ')[0]
             ).toUpperCase() === data.weather[0].main.toUpperCase()" class="text-center text-lg font-bold">
             {{
@@ -51,17 +51,17 @@ function displayWeatherDescription(description: string) {
                 data.weather[0].description
               )
             }}
-          </h3>
+          </p>
 
           <!-- Description else -->
-          <h3 v-else class="text-center text-lg font-bold">
+          <p v-else class="text-center text-lg font-bold">
             {{
               displayWeatherDescription(
                 data.weather[0].description.split(" ")[0]
               )
             }}
             {{ data.weather[0].main }}
-          </h3>
+          </p>
         </div>
 
         <!-- Min / Max celsius -->
@@ -72,6 +72,7 @@ function displayWeatherDescription(description: string) {
 
             <div class="mr-2 mt-1">
               <p class="font-medium">Min</p>
+
               <p class="text-lg lg:text-md">
                 {{ data.main.temp_min.toFixed(1) }} &degC
               </p>
@@ -86,6 +87,7 @@ function displayWeatherDescription(description: string) {
 
             <div class="ml-2 mt-1">
               <p class="font-medium">Max</p>
+              
               <p class="text-lg lg:text-md">
                 {{ data.main.temp_max.toFixed(1) }} &degC
               </p>
