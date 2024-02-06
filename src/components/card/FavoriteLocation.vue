@@ -23,8 +23,9 @@ function confirmPopupOpen(modalLocationName: string) {
 
 <template>
   <div class="border-2 border-white/20 rounded-md mb-3 p-2">
-    <h2 class="text-xl font-medium mb-2 lg:text-2xl">{{ locationName }}</h2>
-    <h2 class="text-md mb-2">Country: {{ country }}</h2>
+    <p class="text-xl font-medium mb-2 lg:text-2xl">{{ locationName }}</p>
+    
+    <p class="text-md mb-2">Country: {{ country }}</p>
 
     <div class="card-actions justify-start">
       <!-- Get weather forecast -->
