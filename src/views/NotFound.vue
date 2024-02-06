@@ -4,9 +4,9 @@ import { RouterLink } from "vue-router";
 
 <template>
   <div class="text-center">
-    <h2 class="mb-4 text-2xl font-bold">
+    <p class="mb-4 text-2xl font-bold">
       Looks like you are somewhere unknown.
-    </h2>
+    </p>
     
     <p class="mb-4 text-lg">Please use the button below to return back.</p>
 
