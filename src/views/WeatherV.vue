@@ -235,5 +235,5 @@ function getDateInWordFormat(weatherDate: string) {
 
   <ModalError :locationName="`${locationModel}`" />
 
-  <ModalErrorFavouriteLocation :locationName="`${locationModel}`" />
+  <ModalErrorFavouriteLocation :locationName="`${weatherStore.currentLocationData.locationName}`" />
 </template>
