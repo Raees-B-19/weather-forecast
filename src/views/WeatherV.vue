@@ -162,12 +162,12 @@ function getDateInWordFormat(weatherDate: string) {
       <!-- Save location button if -->
       <div
         v-if="weatherStore.displaySaveLocationButton"
-        class="mx-auto mb-3 w-fit mt-3"
+        class="mx-auto my-3 w-fit"
       >
         <button
           type="button"
           id="favouriteLocationButton"
-          class="btn btn-success bg-transparent text-white/70 hover:text-white/90"
+          class="btn btn-success bg-transparent mx-auto text-white/70 hover:text-white/90"
           aria-label="Favourite Location"
           @click="handleSaveLoaction"
         >
