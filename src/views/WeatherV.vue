@@ -148,7 +148,7 @@ function getDateInWordFormat(weatherDate: string) {
             id="locationInput"
             class="input text-white/90 border-2 border-white/60 md:w-2/5"
             minlength="1"
-            placeholder="Search a location"
+            placeholder="Search a City Name"
             v-model.trim="locationModel"
             required
           />
