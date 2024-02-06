@@ -13,6 +13,7 @@ import IconBookmark from "@/components/icons/Bookmark.vue";
 
 // Modals
 import ModalError from "@/components/modal/Error.vue";
+import ModalErrorFavouriteLocation from "@/components/modal/ErrorFavouriteLocation.vue";
 
 // Interfaces
 import { type GeographicalCoordinates, type LocationData } from "@/interfaces";
@@ -83,12 +84,21 @@ async function handleSubmit() {
 }
 
 // Favorite Location
-function handleSaveLoaction() {
-  // Add to favorite lcoations
-  weatherStore.addToFavoriteLoactions();
+function handleSaveLocation() {
+  try {
+    // Add to favorite locations
+    weatherStore.addToFavoriteLocations();
+  } catch (e) {
+    // Location already in favourites
+    let errorFavourtieLocationModal = document.getElementById(
+      "error-favorite-location-modal"
+    ) as HTMLDialogElement;
 
-  // Make favourite loaction button not display
-  weatherStore.displaySaveLocationButton = false;
+    errorFavourtieLocationModal.showModal();
+  } finally {
+    // Make favourite location button not display
+    weatherStore.displaySaveLocationButton = false;
+  }
 }
 
 // Months
@@ -153,7 +163,11 @@ function getDateInWordFormat(weatherDate: string) {
             required
           />
 
-          <button type="submit" aria-label="Search Icon Button" class="btn btn-ghost btn-circle ml-1">
+          <button
+            type="submit"
+            aria-label="Search Icon Button"
+            class="btn btn-ghost btn-circle ml-1"
+          >
             <IconSearch />
           </button>
         </div>
@@ -169,7 +183,7 @@ function getDateInWordFormat(weatherDate: string) {
           id="favouriteLocationButton"
           class="btn btn-success bg-transparent mx-auto text-white/70 hover:text-white/90"
           aria-label="Favourite Location"
-          @click="handleSaveLoaction"
+          @click="handleSaveLocation"
         >
           Favourite Location <IconBookmark />
         </button>
@@ -189,24 +203,21 @@ function getDateInWordFormat(weatherDate: string) {
     <!-- Current weather data loop -->
     <div v-for="(dayWeatherData, index) in weatherStore.currentWeatherData">
       <div class="collapse collapse-arrow bg-base-200 mb-2">
-        
         <!-- Collapse Open if -->
         <input v-if="index === 0" type="checkbox" checked />
         <!-- Collapse Open else -->
         <input v-else type="checkbox" />
-        
+
         <!-- Weather date -->
         <div class="collapse-title text-xl font-medium">
-          {{ getDateInWordFormat(dayWeatherData[index].dt_txt.split(" ")[0]) }} <span v-if="index === 0">- Today</span>
+          {{ getDateInWordFormat(dayWeatherData[index].dt_txt.split(" ")[0]) }}
+          <span v-if="index === 0">- Today</span>
         </div>
-        
+
         <!-- Weather forecast data display -->
-        <div class="collapse-content">  
+        <div class="collapse-content">
           <div class="grid gap-3 md:grid-cols-3">
-            <div
-              v-for="weatherData in dayWeatherData"
-              :key="weatherData.dt"
-            >
+            <div v-for="weatherData in dayWeatherData" :key="weatherData.dt">
               <CardWeather :data="weatherData" />
             </div>
           </div>
@@ -223,4 +234,6 @@ function getDateInWordFormat(weatherDate: string) {
   </div>
 
   <ModalError :locationName="`${locationModel}`" />
+
+  <ModalErrorFavouriteLocation :locationName="`${locationModel}`" />
 </template>

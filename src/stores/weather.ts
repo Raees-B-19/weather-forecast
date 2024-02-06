@@ -150,13 +150,14 @@ export const useWeatherStore = defineStore("weatherStore", {
       // In favorite locations
       return true;
     },
-    addToFavoriteLoactions() {
+    addToFavoriteLocations() {
       // Check if location exist in favorite locations
       if (!this.checkIfInFavoriteLocations()) {
         // Doesn't exist in favorite locations
         this.favoriteLocations.push(this.currentLocationData);
       } else {
-        console.log("In favs already");
+        // Already in favourite locations
+        throw new Error(this.currentLocationData.locationName + ' is already in favourite locations.');
       }
     },
     removeFavoriteLocation(locationName: string) {
