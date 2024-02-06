@@ -153,7 +153,7 @@ function getDateInWordFormat(weatherDate: string) {
             required
           />
 
-          <button type="submit" class="btn btn-ghost btn-circle ml-1">
+          <button type="submit" aria-label="Search Icon Button" class="btn btn-ghost btn-circle ml-1">
             <IconSearch />
           </button>
         </div>
@@ -166,7 +166,9 @@ function getDateInWordFormat(weatherDate: string) {
       >
         <button
           type="button"
+          id="favouriteLocationButton"
           class="btn btn-success bg-transparent text-white/70 hover:text-white/90"
+          aria-label="Favourite Location"
           @click="handleSaveLoaction"
         >
           Favourite Location <IconBookmark />
@@ -215,7 +217,7 @@ function getDateInWordFormat(weatherDate: string) {
 
   <!-- Weather forecast else -->
   <div v-else class="mt-4">
-    <p class="text-center">
+    <p class="text-center text-sm">
       Please enter a location to get the Weather Forecast
     </p>
   </div>
