@@ -18,7 +18,7 @@ defineProps<{
         </form>
       </div>
 
-      <h3 class="font-bold text-lg text-rose-300 mb-3">Error</h3>
+      <p class="font-bold text-lg text-rose-300 mb-3">Error</p>
 
       <p class="mb-3">Unable to get weather forecast for {{ locationName }}.</p>
 
