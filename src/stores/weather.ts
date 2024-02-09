@@ -103,8 +103,11 @@ export const useWeatherStore = defineStore("weatherStore", {
 
             // Loop over dataList
             for (let i = 0; i < dataList.length; i++) {
+              // Format and get date
+              let formatedDate = new Date(dataList[i].dt_txt);
+
               // Current weather date
-              currentWeatherDate = dataList[i].dt_txt.split(" ")[0];
+              currentWeatherDate = `${formatedDate.getDate()}-${formatedDate.getMonth()}-${formatedDate.getFullYear()}`;
 
               // Check if the date has changed
               if (

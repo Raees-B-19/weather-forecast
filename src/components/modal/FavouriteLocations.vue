@@ -40,7 +40,7 @@ function closeModal(modalId: string) {
         >
           <!-- Display favorite location -->
           <CardFavoriteLocation
-            :country="`${locationData.country}`"
+            :country="locationData.country"
             :locationName="locationData.locationName"
             @getWeatherForecast="
               weatherStore.getWeatherForecast(
