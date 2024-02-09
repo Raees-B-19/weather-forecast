@@ -21,7 +21,7 @@ let currentLocationData: LocationData = {
 // Export weather store
 export const useWeatherStore = defineStore("weatherStore", {
   state: () => ({
-    apiKey: "c71a382e51b62d85bce7fe1e6db2810f",
+    apiKey: import.meta.env.VITE_OPEN_WEATHER_API_KEY,
     openWeatherMapUrl: "https://api.openweathermap.org",
     displaySaveLocationButton: false,
     favoriteLocations: favoriteLocations,
