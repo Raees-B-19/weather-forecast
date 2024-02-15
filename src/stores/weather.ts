@@ -21,7 +21,7 @@ let currentLocationData: LocationData = {
 // Export weather store
 export const useWeatherStore = defineStore("weatherStore", {
   state: () => ({
-    apiKey: "c71a382e51b62d85bce7fe1e6db2810f",
+    apiKey: import.meta.env.VITE_OPEN_WEATHER_API_KEY,
     openWeatherMapUrl: "https://api.openweathermap.org",
     displaySaveLocationButton: false,
     favoriteLocations: favoriteLocations,
@@ -103,8 +103,11 @@ export const useWeatherStore = defineStore("weatherStore", {
 
             // Loop over dataList
             for (let i = 0; i < dataList.length; i++) {
+              // Format and get date
+              let formatedDate = new Date(dataList[i].dt_txt);
+
               // Current weather date
-              currentWeatherDate = dataList[i].dt_txt.split(" ")[0];
+              currentWeatherDate = `${formatedDate.getDate()}-${formatedDate.getMonth()}-${formatedDate.getFullYear()}`;
 
               // Check if the date has changed
               if (

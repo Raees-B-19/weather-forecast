@@ -52,7 +52,7 @@ function confirmPopupOpen(modalLocationName: string) {
   </div>
 
   <ModalConfirm
-    :locationName="`${locationName}`"
+    :locationName="locationName"
     @removeFavoriteLocation="$emit('removeFavoriteLocation')"
   />
 </template>

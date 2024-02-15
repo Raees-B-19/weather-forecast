@@ -18,7 +18,7 @@ function confirmPopupClose(modalLocationName: string) {
 </script>
 
 <template>
-  <dialog :id="'confirm-popup-modal-' + locationName" class="modal">
+  <dialog :id="`confirm-popup-modal-${locationName}`" class="modal">
     <div class="modal-box">
       <form method="dialog">
         <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">

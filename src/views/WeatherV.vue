@@ -20,7 +20,7 @@ import { type GeographicalCoordinates, type LocationData } from "@/interfaces";
 
 const weatherStore = useWeatherStore();
 
-let locationModel = defineModel("");
+let locationModel = defineModel<string>("", { required: true });
 
 // Store
 weatherStore.currentLocationData = {
@@ -41,7 +41,7 @@ async function handleSubmit() {
   // Get Coordinates
   try {
     let coordinates: GeographicalCoordinates | null =
-      await weatherStore.getGeographicalCoordinates(`${locationModel.value}`);
+      await weatherStore.getGeographicalCoordinates(locationModel.value);
 
     // Check if lat or lon is ont null
     if (
@@ -59,7 +59,7 @@ async function handleSubmit() {
 
     // Get location data
     let currentLocationData: LocationData = {
-      locationName: `${locationModel.value}`,
+      locationName: locationModel.value,
       lat: coordinates.lat,
       lon: coordinates.lon,
     };
@@ -233,7 +233,9 @@ function getDateInWordFormat(weatherDate: string) {
     </p>
   </div>
 
-  <ModalError :locationName="`${locationModel}`" />
+  <ModalError :locationName="locationModel" />
 
-  <ModalErrorFavouriteLocation :locationName="`${weatherStore.currentLocationData.locationName}`" />
+  <ModalErrorFavouriteLocation
+    :locationName="weatherStore.currentLocationData.locationName"
+  />
 </template>
