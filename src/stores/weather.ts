@@ -141,7 +141,9 @@ export const useWeatherStore = defineStore("weatherStore", {
       // Find current location name in favorite locations
       let newFavoriteLocation = this.favoriteLocations.find(
         (location) =>
-          location.locationName == this.currentLocationData.locationName
+          // Make both lowercase
+          location.locationName.toLocaleLowerCase() ==
+          this.currentLocationData.locationName.toLocaleLowerCase()
       );
 
       // Check if in favorite locations
@@ -160,7 +162,10 @@ export const useWeatherStore = defineStore("weatherStore", {
         this.favoriteLocations.push(this.currentLocationData);
       } else {
         // Already in favourite locations
-        throw new Error(this.currentLocationData.locationName + ' is already in favourite locations.');
+        throw new Error(
+          this.currentLocationData.locationName +
+            " is already in favourite locations."
+        );
       }
     },
     removeFavoriteLocation(locationName: string) {
